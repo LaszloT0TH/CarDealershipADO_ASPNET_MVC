@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CarDealershipASPNETMVC.Models.OrderStatusModel>
+
+@{ 
+    //  SettingsOrderStatus
+}
+
+<h1>Auftragsstatus</h1>
+
+<br />
+<h2>Auftragsstatus Liste</h2>
+<a asp-controller="SettingsOrderStatus" asp-action="Search" class='btn btn-primary btn-sm'>Search Auftragsstatus</a>
+<a asp-controller="SettingsOrderStatus" asp-action="Create" class='btn btn-primary btn-sm'>Create neu Auftragsstatus</a>  
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.OrderStatusId)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderStatusName)</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (OrderStatusModel OS in Model)
+            {
+                <tr>
+                    <td>@OS.OrderStatusId</td>
+                    <td>@OS.OrderStatusName</td>
+                    <td>                     
+                        <a asp-controller="SettingsOrderStatus" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@OS.OrderStatusId">Edit</a>
+                        <a asp-controller="SettingsOrderStatus" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@OS.OrderStatusId">Delete</a>
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>

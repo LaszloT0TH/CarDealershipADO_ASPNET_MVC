@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CarDealershipASPNETMVC.Models.SpokenLanguesModel>
+
+@{ 
+    //  SpokenLangues
+}
+
+<h1>Muttersprache</h1>
+
+<br />
+<h2>Muttersprache Liste</h2>
+<a asp-controller="SettingsSpokenLangues" asp-action="Search" class='btn btn-primary btn-sm'>Search Muttersprache</a>
+<a asp-controller="SettingsSpokenLangues" asp-action="Create" class='btn btn-primary btn-sm'>Create neue Muttersprache</a>  
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.SpokenLanguesId)</th>
+            <th>@Html.DisplayNameFor(model => model.SpokenLanguesName)</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (SpokenLanguesModel spLangues in Model)
+            {
+                <tr>
+                    <td>@spLangues.SpokenLanguesId</td>
+                    <td>@spLangues.SpokenLanguesName</td>
+                    <td>                     
+                        <a asp-controller="SettingsSpokenLangues" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@spLangues.SpokenLanguesId">Edit</a>
+                        <a asp-controller="SettingsSpokenLangues" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@spLangues.SpokenLanguesId">Delete</a>
+                </tr>
+            }
+    </tbody>
+</table>

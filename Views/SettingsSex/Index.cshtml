@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CarDealershipASPNETMVC.Models.SexModel>
+
+@{ 
+    //  SettingsSex
+}
+
+<h1>Geschlecht</h1>
+
+<br />
+<h2>Geschlecht Liste</h2>
+<a asp-controller="SettingsSex" asp-action="Search" class='btn btn-primary btn-sm'>Search Geschlecht</a>
+<a asp-controller="SettingsSex" asp-action="Create" class='btn btn-primary btn-sm'>Create neue Geschlecht</a>  
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.SexId)</th>
+            <th>@Html.DisplayNameFor(model => model.SexName)</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (SexModel sex in Model)
+            {
+                <tr>
+                    <td>@sex.SexId</td>
+                    <td>@sex.SexName</td>
+                    <td>                     
+                        <a asp-controller="SettingsSex" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@sex.SexId">Edit</a>
+                        <a asp-controller="SettingsSex" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@sex.SexId">Delete</a>             
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>

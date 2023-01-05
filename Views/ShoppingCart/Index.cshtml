@@ -1,0 +1,257 @@
+﻿@model IEnumerable<CarDealershipASPNETMVC.Models.ShoppingCartModel>
+
+@*
+    // ShoppingCart
+*@
+@{double grandTotal = 0; double summe = 0;}
+<h1>Einkaufswagen</h1>
+
+<br />
+<h2>@GlobalData.ShoppingCartStatus</h2>
+
+
+
+@if (GlobalData.UserAccess == "Customer")
+{ 
+    @if (ViewBag.NewOrdersListCount != 0 
+    && GlobalData.ShoppingCartStatus != "Bestellt"
+    && GlobalData.ShoppingCartStatus != "Unterwegs"
+    && GlobalData.ShoppingCartStatus != "Zugestellt"
+    )
+    {
+        // ha a vásárlólista nem üres
+        <br />
+        <a asp-controller="ShoppingCart" asp-action="AddOrder" class='btn btn-primary btn-sm'>Kaufen</a>
+        <br />
+    }
+    else if (ViewBag.NewOrdersListCount != 0 && GlobalData.ShoppingCartStatus == "Bestellt")
+    {
+        <br />
+        <h4>Ihre Bestellungen</h4>
+        <br />
+    }
+    else if (ViewBag.NewOrdersListCount != 0 && GlobalData.ShoppingCartStatus == "Unterwegs")
+    {
+        <br />
+        <h4>Produckte die Unterwegs</h4>
+        <br />
+    }
+    else if (ViewBag.NewOrdersListCount != 0 && GlobalData.ShoppingCartStatus == "Zugestellt")
+    {
+        <br />
+        <h4>Zugestellte Produckte</h4>
+        <br />
+    }
+    else
+    {
+        <br />
+        <h4>Bitte die Produckte aussuchen</h4>
+        <br />
+    }
+
+    
+}
+else
+{   
+    @if (ViewBag.CustomerIdCountNullCount == 0 && ViewBag.NewOrdersListCount != 0 
+    && GlobalData.ShoppingCartStatus != "Bestellt"
+    && GlobalData.ShoppingCartStatus != "Unterwegs"
+    && GlobalData.ShoppingCartStatus != "Zugestellt"
+    )
+    {
+        // if a customer is assigned to each product in the list and the list is not empty
+        // wenn jedem Produkt in der Liste ein Kunde zugeordnet ist und die Liste nicht leer ist
+        // ha a listában minden termékhez van vásárló rendelve és a lista nem üres
+        <br />
+        <a asp-controller="ShoppingCart" asp-action="AddOrder" class='btn btn-primary btn-sm'>Kaufen</a>
+        <br />
+    }
+    else if (ViewBag.NewOrdersListCount != 0 && GlobalData.ShoppingCartStatus == "Bestellt")
+    {
+        <br />
+        <h4>Ihre Bestellungen</h4>
+        <br />
+    }
+    else if (ViewBag.NewOrdersListCount != 0 && GlobalData.ShoppingCartStatus == "Unterwegs")
+    {
+        <br />
+        <h4>Produckte die Unterwegs</h4>
+        <br />
+    }
+    else if (ViewBag.NewOrdersListCount != 0 && GlobalData.ShoppingCartStatus == "Zugestellt")
+    {
+        <br />
+        <h4>Zugestellte Produckte</h4>
+        <br />
+    }
+    else
+    {
+        @if (ViewBag.NewOrdersListCount == 0)
+        {
+            <br />
+            <h4>Bitte die Produckte aussuchen</h4>
+            <br />
+
+        }
+        else
+        {
+            <br />
+            <h4>Bitte die Kunde aussuchen</h4>
+            <br />
+            <br />
+            <a asp-controller="ShoppingCart" asp-action="AddCustoner" class='btn btn-primary btn-sm'>Eine Kunde hinzufüegen für alles</a>
+            <br />
+
+        }
+    }
+}
+
+
+@if (GlobalData.UserAccess != "Customer" && ViewBag.CustomerIdCountNullCount == 0 && ViewBag.NewOrdersListCount != 0
+    && GlobalData.ShoppingCartStatus != "Bestellt"
+    && GlobalData.ShoppingCartStatus != "Unterwegs"
+    && GlobalData.ShoppingCartStatus != "Zugestellt"
+    )
+{
+    // if you are not a customer or a customer belongs to all products
+    // wenn Sie kein Kunde sind oder ein Kunde zu allen Produkten gehört
+    // ha nem vásárló vagy minden termékhez tartozik vásárló
+    <br />
+        <a asp-controller="ShoppingCart" asp-action="AddCustoner" class='btn btn-primary btn-sm'>Eine Kunde hinzufüegen für alles</a>
+    <br />
+}
+<br />
+@if (GlobalData.ShoppingCartStatus != "Im Einkaufswagen" && ViewBag.Im_Einkaufswagen != 0)
+{
+        <a asp-controller="ShoppingCart" asp-action="In_the_shopping_cart" class='btn btn-primary btn-sm'>Im Einkaufswagen</a>
+}
+@if (GlobalData.ShoppingCartStatus != "Bestellt" && ViewBag.Bestellt != 0)
+{
+        <a asp-controller="ShoppingCart" asp-action="Ordered" class='btn btn-primary btn-sm'>Bestellt</a>
+}
+@if (GlobalData.ShoppingCartStatus != "Für später gespeichert" && ViewBag.Für_später_gespeichert != 0)
+{
+        <a asp-controller="ShoppingCart" asp-action="Saved_for_later" class='btn btn-primary btn-sm'>Für später gespeichert</a>
+}
+@if (GlobalData.ShoppingCartStatus != "Unterwegs" && ViewBag.Unterwegs != 0)
+{
+        <a asp-controller="ShoppingCart" asp-action="In_transit" class='btn btn-primary btn-sm'>Unterwegs</a>
+}
+@if (GlobalData.ShoppingCartStatus != "Zugestellt" && ViewBag.Zugestellt != 0)
+{
+        <a asp-controller="ShoppingCart" asp-action="Shipped" class='btn btn-primary btn-sm'>Zugestellt</a>
+}
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            @if (GlobalData.UserAccess != "Customer")
+            {
+                @*<th>@Html.DisplayNameFor(model => model.ShoppingCartOrderId)</th>
+                <th>@Html.DisplayNameFor(model => model.UserId)</th>
+                <th>@Html.DisplayNameFor(model => model.CustomerId)</th>*@
+                <th>@Html.DisplayNameFor(model => model.CustomerFirstName)</th>
+                <th>@Html.DisplayNameFor(model => model.CustomerLastName)</th>
+                @*<th>@Html.DisplayNameFor(model => model.SalesPersonId)</th>*@
+                <th>@Html.DisplayNameFor(model => model.SalesPersonFirstName)</th>
+                <th>@Html.DisplayNameFor(model => model.SalesPersonLastName)</th>
+                <th>@Html.DisplayNameFor(model => model.ProductId)</th>
+            }
+
+            <th>@Html.DisplayNameFor(model => model.ProductGroup)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+            @if (GlobalData.UserAccess != "Customer")
+            {
+                <th>@Html.DisplayNameFor(model => model.CarModel)</th>
+                <th>@Html.DisplayNameFor(model => model.CarColor)</th>
+            }
+            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+             @if (GlobalData.UserAccess != "Customer")
+            {
+                <th>@Html.DisplayNameFor(model => model.CountryTaxPercentageValue)</th>
+                <th>@Html.DisplayNameFor(model => model.Discount)</th>
+            }
+            <th>@Html.DisplayNameFor(model => model.SaleAmount)</th>
+             @if (GlobalData.UserAccess != "Customer")
+            {            
+                @*<th>@Html.DisplayNameFor(model => model.OrderStatusId)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderStatusName)</th>
+                <th>@Html.DisplayNameFor(model => model.ShoppingCartStatusId)</th>
+                <th>@Html.DisplayNameFor(model => model.ShoppingCartStatusName)</th>*@
+            }
+             <th>Brutto Summe</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ShoppingCartModel shoppingCart in Model)
+        {
+            <tr>
+                @Html.DisplayFor(modelItem => shoppingCart.ShoppingCartOrderId)
+                @Html.DisplayFor(modelItem => shoppingCart.UserId)
+                @Html.DisplayFor(modelItem => shoppingCart.CustomerId)
+                @Html.DisplayFor(modelItem => shoppingCart.SalesPersonId)
+
+                @if (GlobalData.UserAccess != "Customer")
+                {
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.CustomerFirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.CustomerLastName)</td>
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.SalesPersonFirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.SalesPersonLastName)</td>
+                    @Html.DisplayFor(modelItem => shoppingCart.ProductId)
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.ProductIdVisible)</td>
+                }
+                <td>@Html.DisplayFor(modelItem => shoppingCart.ProductGroup)</td>
+                <td>@Html.DisplayFor(modelItem => shoppingCart.ProductName)</td>
+                @if (GlobalData.UserAccess != "Customer")
+                {
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.CarModel)</td>
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.CarColor)</td>
+                }
+                <td>@Html.DisplayFor(modelItem => shoppingCart.Quantity)</td>
+                @if (GlobalData.UserAccess != "Customer")
+                {
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.CountryTaxPercentageValue)</td>
+                    <td>@Html.DisplayFor(modelItem => shoppingCart.Discount)</td>
+                }
+                <td>@Html.DisplayFor(modelItem => shoppingCart.SaleAmount)</td>
+
+                @Html.DisplayFor(modelItem => shoppingCart.OrderStatusId)
+                @Html.DisplayFor(modelItem => shoppingCart.OrderStatusName)
+                @Html.DisplayFor(modelItem => shoppingCart.ShoppingCartStatusId)
+                @Html.DisplayFor(modelItem => shoppingCart.ShoppingCartStatusName)
+                @{
+                    summe = (Convert.ToDouble(shoppingCart.SaleAmount * shoppingCart.Quantity)) * (1 + (Convert.ToDouble(shoppingCart.CountryTaxPercentageValue)) /100);
+                }
+                <td>
+                    @summe.ToString("0.##")
+                </td>
+                @if (GlobalData.ShoppingCartStatus == "Im Einkaufswagen")
+                {
+                    <td>
+                        <a asp-controller="ShoppingCart" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@shoppingCart.ShoppingCartOrderId">Edit</a>
+                        <a asp-controller="ShoppingCart" asp-action="Add_to_Saved_for_later_list" class='btn btn-primary btn-sm' asp-route-id="@shoppingCart.ShoppingCartOrderId">Für später speichern</a>
+                        <a asp-controller="ShoppingCart" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@shoppingCart.ShoppingCartOrderId">Delete</a>
+                    </td>
+
+                }
+                @if (GlobalData.ShoppingCartStatus == "Für später gespeichert")
+                {
+                    <td>
+                        <a asp-controller="ShoppingCart" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@shoppingCart.ShoppingCartOrderId">Edit</a>
+                        <a asp-controller="ShoppingCart" asp-action="Add_to_shopping_cart_list" class='btn btn-primary btn-sm' asp-route-id="@shoppingCart.ShoppingCartOrderId">Zum Einkaufswagen</a>
+                        <a asp-controller="ShoppingCart" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@shoppingCart.ShoppingCartOrderId">Delete</a>
+                    </td>
+                }
+                @{
+                grandTotal += Convert.ToDouble(shoppingCart.Quantity * shoppingCart.SaleAmount * (1 + (Convert.ToDouble(shoppingCart.CountryTaxPercentageValue)) / 100));
+                }
+            </tr>
+        }
+    </tbody>
+        <thead>
+        <tr>
+            <th>Gesamtsumme</th><th>@grandTotal.ToString("0.##")</th>
+        </tr>
+    </thead>
+</table>

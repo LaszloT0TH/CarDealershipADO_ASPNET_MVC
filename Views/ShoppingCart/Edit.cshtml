@@ -1,0 +1,169 @@
+﻿@model CarDealershipASPNETMVC.Models.ShoppingCartModel
+@{
+    //ShoppingCart Edit
+}
+<br />
+<h2>Edit</h2>
+<br />
+<h2>@ViewBag.ProductName</h2>
+
+<form method="post" action="Edit" class="mt-5">
+    
+    <div class="form-group">
+        <input asp-for="ShoppingCartOrderId" class="form-control" />
+        <span asp-validation-for="ShoppingCartOrderId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="UserId" class="form-control" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+
+    @if (GlobalData.UserAccess != "Customer")
+    {
+         <div class="form-group">
+            <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.CustomerId)</label>
+            <div class="col-sm6">
+                     @Html.DropDownListFor(model => model.CustomerId, new SelectList( ViewBag.CustomersList, "CustomerId", "CustomersListItem") , "Select Kunde")
+            </div>
+        </div>
+    }
+    else
+    {
+        <input asp-for="CustomerId" class="form-control" />
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    }
+
+    @*// available only to Managers
+    // nur für Manager verfügbar
+    // csak a Managerek számára elérhető*@   
+    @if (GlobalData.UserAccess == "Manager")
+    {
+        <div class="form-group">
+            <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.SalesPersonId)</label>
+            <div class="col-sm6">
+                @Html.DropDownListFor(model => model.SalesPersonId, new SelectList( ViewBag.SalesPersonsList, "SalesId", "SalespersonsListItem"))
+            </div>
+        </div>
+    }
+    else
+    {
+        <input asp-for="SalesPersonId" class="form-control" />
+        <span asp-validation-for="SalesPersonId" class="text-danger"></span>
+    }
+
+    @if (GlobalData.UserAccess != "Customer")
+    {
+        <div class="form-group">
+            <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.ProductId)</label>
+            <div class="col-sm6">
+                <input type="number" class="form-control" asp-for="ProductId" readonly>
+            </div>
+        </div>
+       
+        @*// If the product identifier is a car accessory, then the product group and product name are visible, if it is a car, then the model and color   
+        // Wenn die Produktkennung ein Autozubehör ist, dann sind Produktgruppe und Produktname sichtbar, wenn es sich um ein Auto handelt, dann das Modell und die Farbe
+        // Ha a termékazonosító autóskiegészítő, akkor a termékcsoport és a terméknév látható, ha autó akkor a modell és a szín *@   
+        @if (Model.ProductId < 1000000)
+        {
+            <div class="form-group">
+                <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.ProductGroup)</label>
+                <div class="col-sm6">
+                    <input type="text" class="form-control" asp-for="ProductGroup" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.ProductName)</label>
+                <div class="col-sm6">
+                    <input type="text" class="form-control" asp-for="ProductName" readonly>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.CarModel)</label>
+                <div class="col-sm6">
+                    <input type="text" class="form-control" asp-for="CarModel" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.CarColor)</label>
+                <div class="col-sm6">
+                    <input type="text" class="form-control" asp-for="CarColor" readonly>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="form-group">
+            <input asp-for="ProductId" class="form-control" />
+            <span asp-validation-for="ProductId" class="text-danger"></span>
+        </div>
+    }
+
+
+    @*// if it is a car, the quantity can only be 1
+    // ha autó akkor a mennyiség csak 1 lehet *@
+    @if (Model.ProductId < 1000000)
+    {
+            <div class="form-group">
+                <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.Quantity)</label>
+                <div class="col-sm6">
+                    <input type="number" class="form-control" asp-for="Quantity">
+                </div>
+            </div> 
+    }
+    else
+    {
+            <div class="form-group">
+                <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.Quantity)</label>
+                <div class="col-sm6">
+                    <input type="number" class="form-control" asp-for="Quantity" readonly>
+                </div>
+            </div> 
+    }
+    
+    
+    @if (GlobalData.UserAccess != "Customer")
+    {
+        <div class="form-group">
+            <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.CountryTaxPercentageValue)</label>
+            <div class="col-sm6">
+                <input type="text" class="form-control" asp-for="CountryTaxPercentageValue" readonly>
+            </div>
+        </div>
+
+    }
+    
+    <div class="form-group">
+        <input asp-for="OrderStatusId" class="form-control" />
+        <span asp-validation-for="OrderStatusId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="OrderStatusName" class="form-control" />
+        <span asp-validation-for="OrderStatusName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="ShoppingCartStatusId" class="form-control" />
+        <span asp-validation-for="ShoppingCartStatusId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="ShoppingCartStatusName" class="form-control" />
+        <span asp-validation-for="ShoppingCartStatusName" class="text-danger"></span>
+    </div>
+
+    
+    <div class="form-group">
+        <label class="col-sm3 col-form-label">@Html.DisplayNameFor(model => model.SaleAmount)</label>
+        <div class="col-sm6">
+            <input type="text" class="form-control" asp-for="SaleAmount" readonly>
+        </div>
+    </div>
+
+
+<br />
+    <button type="submit" class="btn-primary">Submit</button>
+</form>

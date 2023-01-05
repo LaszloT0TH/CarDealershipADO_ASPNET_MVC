@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CarDealershipASPNETMVC.Models.SalespersonModel>
+
+@{
+    // Salesperson
+}
+
+<h1>Verkäufer</h1>
+
+<br />
+<h2>Verkäufer Liste</h2>
+<a asp-controller="Salesperson" asp-action="Search" class='btn btn-primary btn-sm'>Search Verkäufer</a>
+
+<a asp-controller="Salesperson" asp-action="Create" class='btn btn-primary btn-sm'>Create Verkäufer</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.SalesId)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.LastName)</th>
+            <th>@Html.DisplayNameFor(model => model.SexName)</th>
+            <th>@Html.DisplayNameFor(model => model.SpokenLanguesName)</th>
+            <th>@Html.DisplayNameFor(model => model.ManagerId)</th>
+            <th>@Html.DisplayNameFor(model => model.ManagerFirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.ManagerLastName)</th>
+            <th>@Html.DisplayNameFor(model => model.DateOfBirth)</th>
+            <th>@Html.DisplayNameFor(model => model.Street)</th>
+            <th>@Html.DisplayNameFor(model => model.House_Number)</th>
+            <th>@Html.DisplayNameFor(model => model.PostalCode)</th>
+            <th>@Html.DisplayNameFor(model => model.Location)</th>
+            <th>@Html.DisplayNameFor(model => model.CountryName)</th>
+            <th>@Html.DisplayNameFor(model => model.EntryDate)</th>
+            <th>@Html.DisplayNameFor(model => model.TelNr)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (SalespersonModel salesperson in Model)
+        {
+            <tr>
+                <td>@salesperson.SalesId</td>
+                <td>@salesperson.FirstName</td>
+                <td>@salesperson.LastName</td>
+                <td>@salesperson.SexName</td>
+                <td>@salesperson.SpokenLanguesName</td>
+                <td>@salesperson.ManagerId</td>
+                <td>@salesperson.ManagerFirstName</td>
+                <td>@salesperson.ManagerLastName</td>
+                <td>@salesperson.DateOfBirth.ToString()</td>
+                <td>@salesperson.Street</td>
+                <td>@salesperson.House_Number</td>
+                <td>@salesperson.PostalCode</td>
+                <td>@salesperson.Location</td>
+                <td>@salesperson.CountryName</td>
+                <td>@salesperson.EntryDate.ToString()</td>
+                <td>@salesperson.TelNr</td>
+                <td>@salesperson.Email</td>
+                <td>                     
+                    <a asp-controller="Salesperson" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@salesperson.SalesId">Edit</a> 
+                    <a asp-controller="Salesperson" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@salesperson.SalesId">Delete</a> 
+                </td>
+                
+                
+            </tr>
+        }
+    </tbody>
+</table>

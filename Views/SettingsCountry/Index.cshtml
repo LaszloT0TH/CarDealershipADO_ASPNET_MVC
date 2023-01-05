@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CarDealershipASPNETMVC.Models.CountryModel>
+
+@{ 
+    //  SettingsCountry
+}
+
+<h1>Countries</h1>
+
+<br />
+<h2>Countries Liste</h2>
+<a asp-controller="SettingsCountry" asp-action="Search" class='btn btn-primary btn-sm'>Search Country</a>
+<a asp-controller="SettingsCountry" asp-action="Create" class='btn btn-primary btn-sm'>Create neu Country</a>
+     
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CountryId)</th>
+            <th>@Html.DisplayNameFor(model => model.CountryName)</th>
+            <th>@Html.DisplayNameFor(model => model.CountryTaxPercentageValue)</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (CountryModel county in Model)
+            {
+                <tr>
+                    <td>@county.CountryId</td>
+                    <td>@county.CountryName</td>
+                    <td>@county.CountryTaxPercentageValue</td>
+                    <td>                     
+                        <a asp-controller="SettingsCountry" asp-action="Edit" class='btn btn-primary btn-sm' asp-route-id="@county.CountryId">Edit</a>
+                        <a asp-controller="SettingsCountry" asp-action="Delete" class='btn btn-danger btn-sm' asp-route-id="@county.CountryId">Delete</a> 
+                    </td>
+                
+                
+                </tr>
+            }
+
+    </tbody>
+</table>
